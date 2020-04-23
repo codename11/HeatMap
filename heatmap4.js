@@ -26,20 +26,18 @@ $(document).ready( () => {
             //Getting actual (only)year parts from dataset.
             let years = dataset.monthlyVariance.map((item, i) => {
 
-                return item.year;
+                return new Date(item.year, 1, 0, 0, 0, 0, 0);
 
             });
 
-            years = years.filter((item, i) => {
-                
-                return years.indexOf(item) === i && item%10===0;
-
-            });
+            //Calculating year.
+            let minYear = new Date(d3.min(years));//Calculating first year in dataset.
+            let maxYear = new Date(d3.max(years));//Calculating last year in dataset.
             
             // Build X scales and axis:
-            let x = d3.scaleBand()
+            let x = d3.scaleTime()
                 .range([ 0, w ])
-                .domain(years);
+                .domain([minYear,maxYear]);
 
             //Drawing y axis.
             const xAxis = d3.axisBottom(x);
@@ -66,7 +64,7 @@ $(document).ready( () => {
                 .attr("id", "y-axis")
                 .call(yAxis);
 
-            let rectWidth = w / dataset.monthlyVariance.length*12;
+            let rectWidth = w / dataset.monthlyVariance.length;
             let rectHeight = h / 12;
 
             let tempVariance = dataset.monthlyVariance.map((item, i) => {
@@ -97,26 +95,26 @@ $(document).ready( () => {
                 .append("rect")
                 .attr("x", (d,i) => {
                     
-                    if(x(d.year)){
+                   
                         return x(d.year);
-                    }
+                    
                     
                 })
                 .attr("y", (d,i) => { 
 
                     if(y(monthNames[d.month])){
-                        console.log(y(monthNames[d.month]));
                         return y(monthNames[d.month]);
                     }
                     
                 })
                 .attr("width", (d, i) =>{
-                    return x.bandwidth();
-                    //return rectWidth;
+                    //return (i*rectWidth);
+                    //return x.bandwidth();
+                    return rectWidth;
                 })
                 .attr("height", (d, i) =>{
-                    return y.bandwidth();
-                    //return rectHeight;
+                    //return y.bandwidth();
+                    return rectHeight;
                 })
                 .attr("data-year", (d,i) => {
                     return d.year;
@@ -140,29 +138,7 @@ $(document).ready( () => {
                 .on('mouseout', (d) => {
                     tooltip.style('opacity', 0);
                 });
-
-                //Draw the Heat Label:
-                svg.append("text")
-                    .attr("id", "title")
-                    .attr("class", "headline")
-                    .attr("x", w / 2)
-                    .attr("y", m.top)
-                    .attr("font-family", "sans-serif")
-                    .attr("fill", "green")
-                    .attr("text-anchor", "middle")
-                    .text("Monthly Global Land-Surface Temperature"); 
-
-                //Draw the Heat Sub-Label:
-                svg.append("text")
-                    .attr("id", "description")
-                    .attr("class", "headline1")
-                    .attr("x", w / 2)
-                    .attr("y", m.top*2)
-                    .attr("font-family", "sans-serif")
-                    .attr("fill", "green")
-                    .attr("text-anchor", "middle")
-                    .text("1753 - 2015: base temperature 8.66℃");
-
+                
         },
         error: (xhr, ajaxOptions, thrownError) => {
 

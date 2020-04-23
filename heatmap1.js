@@ -6,7 +6,7 @@ $(document).ready( () => {
         success: (response) => {
 
             let res = JSON.parse(response)
-            console.log(res);
+            //console.log(res);
         },
         error: (xhr, ajaxOptions, thrownError) => {
 
@@ -60,6 +60,7 @@ $(document).ready( () => {
 
         svg.selectAll()
             .data(data, (d) => {
+                console.log(data);
                 return d.group+':'+d.variable;
             })
             .enter()
