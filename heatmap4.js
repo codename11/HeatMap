@@ -23,16 +23,13 @@ $(document).ready( () => {
             //Translating axises to accomodate for margin.If we don't, ticks and numbers would look cut of.
             const g = svg.append("g").attr("transform", "translate(" + m.left*2 + ","+m.top*3+")");
             
-            //Getting actual (only)year parts from dataset.
-            let years = dataset.monthlyVariance.map((item, i) => {
-
-                return new Date(item.year, 1, 0, 0, 0, 0, 0);
-
+            let date = dataset.monthlyVariance.map((item, i) => {
+                return new Date(item.year, item.month-1);
             });
-
+            
             //Calculating year.
-            let minYear = new Date(d3.min(years));//Calculating first year in dataset.
-            let maxYear = new Date(d3.max(years));//Calculating last year in dataset.
+            let minYear = new Date(d3.min(date));//Calculating first year in dataset.
+            let maxYear = new Date(d3.max(date));//Calculating last year in dataset.
             
             // Build X scales and axis:
             let x = d3.scaleTime()
