@@ -2,12 +2,10 @@ svg{
     padding: 20px;
 }
 
-/*This controls the Chart Title.*/
 text .title{
     font-size: 16px;
 }
 
-/*This controls the axis text size.*/
 .axis text{
     font-size: 8px;
 }
@@ -31,11 +29,6 @@ text .title{
     box-shadow:10px 10px 40px 5px whitesmoke; 
     border-radius: 5px;
     position: absolute !important;
-    /*left: 50% !important;
-    top: 50% !important;
-    -webkit-transform: translate(-50%, -50%) !important;
-    -webkit-transform: translate(-50%, -50%) !important;
-    transform: translate(-50%, -50%) !important;*/
     padding: 10px;
     text-align: center;
 }
