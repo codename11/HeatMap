@@ -17,11 +17,6 @@ text .title{
     border: 1px solid red;
 }
 
-.cell:hover{
-
-    border: 1px solid red;
-}
-
 .headline{
     font-size: 32px;
 }
